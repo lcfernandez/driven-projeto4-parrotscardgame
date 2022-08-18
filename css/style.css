@@ -1,72 +1,72 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
 body {
-  background: #EEF9BF;
-  color: #75B79E;
-  font-family: 'Roboto', sans-serif;
-  font-size: 56px;
-  font-weight: 700;
-  padding: 0 20px;
-  text-align: center;
+    background: #EEF9BF;
+    color: #75B79E;
+    font-family: 'Roboto', sans-serif;
+    font-size: 56px;
+    font-weight: 700;
+    padding: 0 20px;
+    text-align: center;
 }
 
 header {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  height: 150px;
-  justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    height: 150px;
+    justify-content: center;
 }
 
 main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .card {
-  height: 146px;
-  margin: 0 17px 34px 17px;
-  position: relative;
-  width: 117px;
+    height: 146px;
+    margin: 0 17px 34px 17px;
+    position: relative;
+    width: 117px;
 }
 
 .card img {
-  width: 90%;
+    width: 90%;
 }
 
 .face {
-  align-items: center;
-  backface-visibility: hidden;
-  background-color: #A7E9AF;
-  border: 1px solid #99CEA8;
-  border-radius: 5px;
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  position: absolute;
-  transform-style: preserve-3d;
-  transition: all .5s;
-  width: 100%;
+    align-items: center;
+    backface-visibility: hidden;
+    background-color: #A7E9AF;
+    border: 1px solid #99CEA8;
+    border-radius: 5px;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: all .5s;
+    width: 100%;
 }
 
 /* keep card face down */
 .back-face {
-  transform: rotateY(180deg);
+    transform: rotateY(180deg);
 }
 
 /* turn card effect */
 .turn {
-  transform: rotateY(-180deg);
+    transform: rotateY(-180deg);
 }
 
 /* reveal and hold card's face effect */
 .hold {
-  transform: rotateY(0deg);
+    transform: rotateY(0deg);
 }
 
 @media (max-width: 600px){
-  body {
-    font-size: 36px;
-  }
+    body {
+        font-size: 36px;
+    }
 }
