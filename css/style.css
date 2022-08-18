@@ -55,8 +55,8 @@ main {
   transform: rotateY(180deg);
 }
 
-/* flip card effect */
-.flip {
+/* turn card effect */
+.turn {
   transform: rotateY(-180deg);
 }
 
