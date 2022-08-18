@@ -80,7 +80,16 @@ while ((amount < 4) || (amount > 14) || (amount %2 !== 0)) {
 faces.sort(comparator);
 for (let i = 0; i < amount / 2; i++) {
     for (let j = 0; j < 2; j++) {
-        cards.push(`<div class="card" onclick="choose(this)"><div class="front-face face"><img src="../images/front.png" /></div><div class="back-face face"><img src="../images/${faces[i]}parrot.gif" /></div></div>`);
+        cards.push(
+            `<div class="card" onclick="choose(this)">
+                <div class="front-face face">
+                    <img src="../images/front.png" />
+                </div>
+                <div class="back-face face">
+                    <img src="../images/back/${faces[i]}.gif" />
+                </div>
+            </div>`
+        );
     }
 }
 
