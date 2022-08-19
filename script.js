@@ -12,13 +12,15 @@ let lastChosen;
 /* functions */
 
 function choose(card) {
-    flip(card);
-    moves++;
+    if (lastChosen != card) {
+        flip(card);
+        moves++;
 
-    if (moves == 0 || (moves % 2 === 1)) {
-        lastChosen = card;
-    } else {
-        check(card);
+        if (moves == 0 || (moves % 2 === 1)) {
+            lastChosen = card;
+        } else {
+            check(card);
+        }
     }
 }
 
