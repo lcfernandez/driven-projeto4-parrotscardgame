@@ -33,7 +33,8 @@ function check(card) {
         card.classList.add("match");
         
         if (matchingPairs === amount / 2) {
-            alert(`Você ganhou em ${moves} jogadas!`);
+            stopCounting();
+            alert(`Você ganhou em ${moves} jogadas (durante ${time} segundos)!`);
         } else {
             unFreeze("U");
         }
@@ -72,6 +73,23 @@ function unFreeze(option) {
     }
 }
 
+let time = 0;
+let id;
+
+function startCounting() {
+    id = setInterval(refreshCounter, 1000);
+}
+
+function refreshCounter() {
+    time++;
+    const counter = document.querySelector(".counter");
+    counter.innerHTML = time;
+}
+
+function stopCounting() {
+    clearInterval(id);
+}
+
 
 /* asking how many cards the player wants */
 while ((amount < 4) || (amount > 14) || (amount %2 !== 0)) {
@@ -100,3 +118,5 @@ cards.sort(comparator);
 for (let i = 0; i < amount; i++) {
     main.innerHTML += cards[i];
 }
+
+startCounting();

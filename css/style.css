@@ -16,12 +16,25 @@ header {
     flex-wrap: wrap;
     height: 150px;
     justify-content: center;
+    /* position: relative; */
 }
 
 main {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.box {
+    background-color: #75B79E;
+    border-radius: 5px;
+    color: #f1f7f5; 
+    font-size: 22px;
+    padding: 5px;
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    z-index: 1;
 }
 
 .card {
@@ -68,5 +81,17 @@ main {
 @media (max-width: 600px){
     body {
         font-size: 36px;
+    }
+}
+
+@media (max-width: 388px){
+    .box {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 244px){
+    .box {
+        top: 0;
     }
 }
