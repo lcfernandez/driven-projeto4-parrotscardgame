@@ -1,11 +1,13 @@
 /* variables */
 
 const main = document.querySelector("main");
-const faces = ["bobross", "explody", "fiesta", "metal", "revertit", "triplets", "unicorn"]
 const cards = [];
+const faces = ["bobross", "explody", "fiesta", "metal", "revertit", "triplets", "unicorn"]
 let amount = 0;
-let moves = 0;
 let matchingPairs = 0;
+let moves = 0;
+let time = 0;
+let id;
 let lastChosen;
 
 
@@ -34,7 +36,7 @@ function check(card) {
         
         if (matchingPairs === amount / 2) {
             stopCounting();
-            alert(`Você ganhou em ${moves} jogadas (durante ${time} segundos)!`);
+            alert(`Você ganhou em ${moves} jogadas! O jogo durou ${time} segundos.`);
         } else {
             unFreeze("U");
         }
@@ -58,6 +60,20 @@ function flip(card) {
     card.querySelector(".back-face").classList.toggle("hold");
 }
 
+function refreshCounter() {
+    time++;
+    const counter = document.querySelector(".counter");
+    counter.innerHTML = time;
+}
+
+function startCounting() {
+    id = setInterval(refreshCounter, 1000);
+}
+
+function stopCounting() {
+    clearInterval(id);
+}
+
 function unFreeze(option) {
     const cards = document.querySelectorAll(".card:not(.match)");
     if (option === "U") {
@@ -71,23 +87,6 @@ function unFreeze(option) {
     } else {
         return;
     }
-}
-
-let time = 0;
-let id;
-
-function startCounting() {
-    id = setInterval(refreshCounter, 1000);
-}
-
-function refreshCounter() {
-    time++;
-    const counter = document.querySelector(".counter");
-    counter.innerHTML = time;
-}
-
-function stopCounting() {
-    clearInterval(id);
 }
 
 
