@@ -1,14 +1,15 @@
 /* variables */
 
+const counter = document.querySelector(".counter");
 const main = document.querySelector("main");
-const cards = [];
-const faces = ["bobross", "explody", "fiesta", "metal", "revertit", "triplets", "unicorn"]
-let amount = 0;
-let matchingPairs = 0;
-let moves = 0;
-let time = 0;
-let id;
+const faces = ["bobross", "explody", "fiesta", "metal", "revertit", "triplets", "unicorn"];
+let amount;
+let cards;
+let idInterval;
 let lastChosen;
+let matchingPairs;
+let moves;
+let time;
 
 
 /* functions */
@@ -31,19 +32,29 @@ function check(card) {
 
     if (card.querySelector(".back-face img").src === lastChosen.querySelector(".back-face img").src) {
         matchingPairs++;
-        lastChosen.classList.add("match");
         card.classList.add("match");
+        lastChosen.classList.add("match");
         
         if (matchingPairs === amount / 2) {
             stopCounting();
             alert(`Você ganhou em ${moves} jogadas! O jogo durou ${time} segundos.`);
+
+            let again;
+
+            while (again !== "sim" && again !== "não") {
+                again = prompt("Deseja jogar novamente? (sim/não)");
+            }
+            
+            if (again === "sim") {    
+                startGame();
+            }
         } else {
             unFreeze("U");
         }
     } else {
         setTimeout(function () {
-            flip(lastChosen);
             flip(card);
+            flip(lastChosen);
             unFreeze("U");
             
             lastChosen = undefined;
@@ -60,22 +71,64 @@ function flip(card) {
     card.querySelector(".back-face").classList.toggle("hold");
 }
 
-function refreshCounter() {
-    time++;
-    const counter = document.querySelector(".counter");
-    counter.innerHTML = time;
+function startCounting() {
+    time = 0;
+    idInterval = setInterval(function () {
+        time++;
+        counter.innerHTML = time;
+    }, 1000);
 }
 
-function startCounting() {
-    id = setInterval(refreshCounter, 1000);
+function startGame() {
+    amount = 0;
+    matchingPairs = 0;
+    moves = 0;
+    cards = [];
+    lastChosen = undefined;
+    
+    /* asking how many cards the player wants */
+    while ((amount < 4) || (amount > 14) || (amount %2 !== 0)) {
+        amount = prompt("Com quantas cartas você quer jogar?");
+    }
+    
+    /* sorting the faces and creating cards */
+    faces.sort(comparator);
+
+    for (let i = 0; i < amount / 2; i++) {
+        for (let j = 0; j < 2; j++) {
+            cards.push(
+                `<div class="card" onclick="choose(this)">
+                    <div class="front-face face">
+                        <img src="../images/front.png" />
+                    </div>
+                    <div class="back-face face">
+                        <img src="../images/back/${faces[i]}.gif" />
+                    </div>
+                </div>`
+            );
+        }
+    }
+    
+    counter.innerHTML = 0;
+    main.innerHTML = "";
+
+    /* sorting the cards and including into the page */
+    cards.sort(comparator);
+
+    for (let i = 0; i < amount; i++) {
+        main.innerHTML += cards[i];
+    }
+    
+    startCounting();
 }
 
 function stopCounting() {
-    clearInterval(id);
+    clearInterval(idInterval);
 }
 
 function unFreeze(option) {
     const cards = document.querySelectorAll(".card:not(.match)");
+    
     if (option === "U") {
         for (let i = 0; i < cards.length; i++) {
             cards[i].setAttribute("onclick", "choose(this)");
@@ -89,33 +142,4 @@ function unFreeze(option) {
     }
 }
 
-
-/* asking how many cards the player wants */
-while ((amount < 4) || (amount > 14) || (amount %2 !== 0)) {
-    amount = prompt("Com quantas cartas você quer jogar?");
-}
-
-/* sorting the faces and creating cards */
-faces.sort(comparator);
-for (let i = 0; i < amount / 2; i++) {
-    for (let j = 0; j < 2; j++) {
-        cards.push(
-            `<div class="card" onclick="choose(this)">
-                <div class="front-face face">
-                    <img src="../images/front.png" />
-                </div>
-                <div class="back-face face">
-                    <img src="../images/back/${faces[i]}.gif" />
-                </div>
-            </div>`
-        );
-    }
-}
-
-/* sorting the cards and including into the page */
-cards.sort(comparator);
-for (let i = 0; i < amount; i++) {
-    main.innerHTML += cards[i];
-}
-
-startCounting();
+startGame();
