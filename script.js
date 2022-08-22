@@ -65,7 +65,7 @@ function check(card) {
 }
 
 function comparator() { 
-    return Math.random() - 0.5; 
+    return Math.random() - 0.5;
 }
 
 function flip(card) {
@@ -103,10 +103,10 @@ function startGame() {
             for (let j = 0; j < 2; j++) {
                 cards.push(
                     `<div class="card" onclick="choose(this)">
-                        <div class="front-face face">
+                        <div class="front-face face turn">
                             <img src="../images/front.png" />
                         </div>
-                        <div class="back-face face">
+                        <div class="back-face face hold">
                             <img src="../images/back/${faces[i]}parrot.gif" />
                         </div>
                     </div>`
@@ -120,8 +120,16 @@ function startGame() {
         for (let i = 0; i < amount; i++) {
             main.innerHTML += cards[i];
         }
-        
-        startCounting();
+
+        setTimeout(function () {
+            const insertedCards = main.querySelectorAll(".card");
+            
+            for (let i = 0; i < amount; i++) {
+                flip(insertedCards[i]);
+            }
+            
+            startCounting();
+        }, 1000);
     }, 100);
 }
 
