@@ -14,7 +14,12 @@ let time;
 /* functions */
 
 function check(card) {
-    unFreeze("F");
+    /* freezing other cards */
+    const cards = remainingCards();
+
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].removeAttribute("onclick");
+    }
 
     if (card.querySelector(".back-face img").src === firstChoice.querySelector(".back-face img").src) {
         matchingPairs++;
@@ -39,14 +44,15 @@ function check(card) {
                 }
             }, 100);
         } else {
-            unFreeze("U");
+            /* unfreezing the new set of remaining cards */
+            unfreeze(remainingCards());
         }
     } else {
         /* to give time to the player to memorize the card*/
         setTimeout(function () {
             flip(card);
             flip(firstChoice);
-            unFreeze("U");
+            unfreeze(cards);
             
             firstChoice = undefined;
         }, 1000);
@@ -75,6 +81,10 @@ function flip(card) {
     card.querySelector(".back-face").classList.toggle("hold");
 }
 
+function remainingCards() {
+    return document.querySelectorAll(".card:not(.match)");
+}
+
 function startGame() {
     let cardsTemplate = [];
 
@@ -90,7 +100,7 @@ function startGame() {
     /* to load the entire page before the prompt (for the first time the page is opened) */
     setTimeout(function () {
         /* asking how many cards the player wants */
-        while ((amount < 4) || (amount > 14) || (amount %2 !== 0)) {
+        while ((amount < 4) || (amount > 14) || (amount % 2 !== 0)) {
             amount = prompt("Com quantas cartas você quer jogar?");
         }
         
@@ -144,19 +154,9 @@ function stopTimer() {
     clearInterval(idInterval);
 }
 
-function unFreeze(option) {
-    const remainingCards = document.querySelectorAll(".card:not(.match)");
-    
-    if (option === "U") {
-        for (let i = 0; i < remainingCards.length; i++) {
-            remainingCards[i].setAttribute("onclick", "choose(this)");
-        }
-    } else if (option === "F") {
-        for (let i = 0; i < remainingCards.length; i++) {
-            remainingCards[i].removeAttribute("onclick");
-        }
-    } else {
-        return;
+function unfreeze(cards) {
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].setAttribute("onclick", "choose(this)");
     }
 }
 
