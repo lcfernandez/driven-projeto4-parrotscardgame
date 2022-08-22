@@ -76,7 +76,7 @@ function flip(card) {
 }
 
 function startGame() {
-    let cards = [];
+    let cardsTemplate = [];
 
     /* setting values inside the function in case of new game */
     amount = 0;
@@ -99,7 +99,7 @@ function startGame() {
 
         for (let i = 0; i < amount / 2; i++) {
             for (let j = 0; j < 2; j++) {
-                cards.push(
+                cardsTemplate.push(
                     `<div class="card" onclick="choose(this)">
                         <div class="front-face face turn">
                             <img src="../images/front.png" />
@@ -113,18 +113,18 @@ function startGame() {
         }
 
         /* sorting cards and including into the page (faces revealed) */
-        cards.sort(comparator);
+        cardsTemplate.sort(comparator);
 
         for (let i = 0; i < amount; i++) {
-            main.innerHTML += cards[i];
+            main.innerHTML += cardsTemplate[i];
         }
 
         /* to flip the cards face down and start the timer */
         setTimeout(function () {
-            const insertedCards = main.querySelectorAll(".card");
+            const cards = main.querySelectorAll(".card");
 
             for (let i = 0; i < amount; i++) {
-                flip(insertedCards[i]);
+                flip(cards[i]);
             }
             
             startTimer();
@@ -145,15 +145,15 @@ function stopTimer() {
 }
 
 function unFreeze(option) {
-    const cards = document.querySelectorAll(".card:not(.match)");
+    const remainingCards = document.querySelectorAll(".card:not(.match)");
     
     if (option === "U") {
-        for (let i = 0; i < cards.length; i++) {
-            cards[i].setAttribute("onclick", "choose(this)");
+        for (let i = 0; i < remainingCards.length; i++) {
+            remainingCards[i].setAttribute("onclick", "choose(this)");
         }
     } else if (option === "F") {
-        for (let i = 0; i < cards.length; i++) {
-            cards[i].removeAttribute("onclick");
+        for (let i = 0; i < remainingCards.length; i++) {
+            remainingCards[i].removeAttribute("onclick");
         }
     } else {
         return;
