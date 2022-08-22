@@ -85,14 +85,16 @@ function startGame() {
     moves = 0;
     cards = [];
     lastChosen = undefined;
-    
+    counter.innerHTML = 0;
+    main.innerHTML = "";
+
     setTimeout(function () {
         /* asking how many cards the player wants */
         while ((amount < 4) || (amount > 14) || (amount %2 !== 0)) {
             amount = prompt("Com quantas cartas você quer jogar?");
         }
         
-        /* sorting the faces and creating cards */
+        /* sorting faces and creating cards */
         faces.sort(comparator);
 
         for (let i = 0; i < amount / 2; i++) {
@@ -109,11 +111,8 @@ function startGame() {
                 );
             }
         }
-        
-        counter.innerHTML = 0;
-        main.innerHTML = "";
 
-        /* sorting the cards and including into the page */
+        /* sorting cards and including into the page */
         cards.sort(comparator);
 
         for (let i = 0; i < amount; i++) {
