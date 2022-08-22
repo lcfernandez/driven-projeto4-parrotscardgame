@@ -94,8 +94,7 @@ function startGame() {
     moves = 0;
     firstChoice = undefined;
 
-    timer.innerHTML = 0;
-    main.innerHTML = "";
+
 
     /* to load the entire page before the prompt (for the first time the page is opened) */
     setTimeout(function () {
@@ -121,6 +120,11 @@ function startGame() {
                 );
             }
         }
+
+        /* reseting the page and positioning back to the top (in case of new game */
+        timer.innerHTML = 0;
+        main.innerHTML = "";
+        window.scrollTo(0, 0);
 
         /* sorting cards and including into the page (faces revealed) */
         cardsTemplate.sort(comparator);
