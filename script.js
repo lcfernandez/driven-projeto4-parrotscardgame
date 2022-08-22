@@ -93,8 +93,9 @@ function startGame() {
     matchingPairs = 0;
     moves = 0;
     firstChoice = undefined;
-
-
+    
+    timer.innerHTML = 0;
+    main.innerHTML = "";
 
     /* to load the entire page before the prompt (for the first time the page is opened) */
     setTimeout(function () {
@@ -111,20 +112,15 @@ function startGame() {
                 cardsTemplate.push(
                     `<div class="card" onclick="choose(this)">
                         <div class="front-face face turn">
-                            <img src="../images/front.png" />
+                            <img src="./images/front.png" />
                         </div>
                         <div class="back-face face hold">
-                            <img src="../images/back/${faces[i]}parrot.gif" />
+                            <img src="./images/back/${faces[i]}parrot.gif" />
                         </div>
                     </div>`
                 );
             }
         }
-
-        /* reseting the page and positioning back to the top (in case of new game */
-        timer.innerHTML = 0;
-        main.innerHTML = "";
-        window.scrollTo(0, 0);
 
         /* sorting cards and including into the page (faces revealed) */
         cardsTemplate.sort(comparator);
