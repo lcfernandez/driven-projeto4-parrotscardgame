@@ -37,17 +37,19 @@ function check(card) {
         
         if (matchingPairs === amount / 2) {
             stopCounting();
-            alert(`Você ganhou em ${moves} jogadas! O jogo durou ${time} segundos.`);
+            setTimeout(function () {
+                alert(`Você ganhou em ${moves} jogadas! O jogo durou ${time} segundos.`);
 
-            let again;
+                let again;
 
-            while (again !== "sim" && again !== "não") {
-                again = prompt("Deseja jogar novamente? (sim/não)");
-            }
-            
-            if (again === "sim") {    
-                startGame();
-            }
+                while (again !== "sim" && again !== "não") {
+                    again = prompt("Deseja jogar novamente? (sim/não)");
+                }
+                
+                if (again === "sim") {    
+                    startGame();
+                }
+            }, 100);
         } else {
             unFreeze("U");
         }
@@ -120,7 +122,7 @@ function startGame() {
         }
         
         startCounting();
-    }, 1);
+    }, 100);
 }
 
 function stopCounting() {
