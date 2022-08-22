@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
 
+
+
+/* tags */
+
+
 body {
     background: #EEF9BF;
     color: #75B79E;
@@ -24,10 +29,17 @@ main {
     justify-content: center;
 }
 
+
+
+/* classes */
+
+
+/* elements */
+
 .box {
     background-color: #75B79E;
     border-radius: 5px;
-    color: #f1f7f5; 
+    color: #ffffff; 
     font-size: 22px;
     padding: 5px;
     position: fixed;
@@ -62,9 +74,19 @@ main {
     width: 100%;
 }
 
+/**/
+
+
+/* behaviours */
+
 /* keep card face down */
 .back-face {
     transform: rotateY(180deg);
+}
+
+/* reveal and hold card's face effect */
+.hold {
+    transform: rotateY(0deg);
 }
 
 /* turn card effect */
@@ -72,10 +94,12 @@ main {
     transform: rotateY(-180deg);
 }
 
-/* reveal and hold card's face effect */
-.hold {
-    transform: rotateY(0deg);
-}
+/**/
+
+
+
+/* responsivity */
+
 
 @media (max-width: 600px){
     body {

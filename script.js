@@ -1,12 +1,11 @@
-/* variables */
+/* global variables */
 
-const counter = document.querySelector(".counter");
 const main = document.querySelector("main");
+const timer = document.querySelector(".timer");
 const faces = ["bobross", "explody", "fiesta", "metal", "revertit", "triplets", "unicorn"];
 let amount;
-let cards;
 let idInterval;
-let lastChosen;
+let firstChoice;
 let matchingPairs;
 let moves;
 let time;
@@ -14,29 +13,18 @@ let time;
 
 /* functions */
 
-function choose(card) {
-    if (lastChosen != card) {
-        flip(card);
-        moves++;
-
-        if (moves === 0 || (moves % 2 !== 0)) {
-            lastChosen = card;
-        } else {
-            check(card);
-        }
-    }
-}
-
 function check(card) {
     unFreeze("F");
 
-    if (card.querySelector(".back-face img").src === lastChosen.querySelector(".back-face img").src) {
+    if (card.querySelector(".back-face img").src === firstChoice.querySelector(".back-face img").src) {
         matchingPairs++;
         card.classList.add("match");
-        lastChosen.classList.add("match");
+        firstChoice.classList.add("match");
         
         if (matchingPairs === amount / 2) {
-            stopCounting();
+            stopTimer();
+
+            /* to flip the last card of the game in the mobile version */
             setTimeout(function () {
                 alert(`Você ganhou em ${moves} jogadas! O jogo durou ${time} segundos.`);
 
@@ -54,13 +42,27 @@ function check(card) {
             unFreeze("U");
         }
     } else {
+        /* to give time to the player to memorize the card*/
         setTimeout(function () {
             flip(card);
-            flip(lastChosen);
+            flip(firstChoice);
             unFreeze("U");
             
-            lastChosen = undefined;
+            firstChoice = undefined;
         }, 1000);
+    }
+}
+
+function choose(card) {
+    if (card != firstChoice) {
+        flip(card);
+        moves++;
+
+        if (moves === 0 || (moves % 2 !== 0)) {
+            firstChoice = card;
+        } else {
+            check(card);
+        }
     }
 }
 
@@ -73,23 +75,19 @@ function flip(card) {
     card.querySelector(".back-face").classList.toggle("hold");
 }
 
-function startCounting() {
-    time = 0;
-    idInterval = setInterval(function () {
-        time++;
-        counter.innerHTML = time;
-    }, 1000);
-}
-
 function startGame() {
+    let cards = [];
+
+    /* setting values inside the function in case of new game */
     amount = 0;
     matchingPairs = 0;
     moves = 0;
-    cards = [];
-    lastChosen = undefined;
-    counter.innerHTML = 0;
+    firstChoice = undefined;
+
+    timer.innerHTML = 0;
     main.innerHTML = "";
 
+    /* to load the entire page before the prompt (for the first time the page is opened) */
     setTimeout(function () {
         /* asking how many cards the player wants */
         while ((amount < 4) || (amount > 14) || (amount %2 !== 0)) {
@@ -114,26 +112,35 @@ function startGame() {
             }
         }
 
-        /* sorting cards and including into the page */
+        /* sorting cards and including into the page (faces revealed) */
         cards.sort(comparator);
 
         for (let i = 0; i < amount; i++) {
             main.innerHTML += cards[i];
         }
 
+        /* to flip the cards face down and start the timer */
         setTimeout(function () {
             const insertedCards = main.querySelectorAll(".card");
-            
+
             for (let i = 0; i < amount; i++) {
                 flip(insertedCards[i]);
             }
             
-            startCounting();
+            startTimer();
         }, 1000);
     }, 100);
 }
 
-function stopCounting() {
+function startTimer() {
+    time = 0;
+    idInterval = setInterval(function () {
+        time++;
+        timer.innerHTML = time;
+    }, 1000);
+}
+
+function stopTimer() {
     clearInterval(idInterval);
 }
 
@@ -152,5 +159,8 @@ function unFreeze(option) {
         return;
     }
 }
+
+
+/* initializing game */
 
 startGame();
