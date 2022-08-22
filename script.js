@@ -19,7 +19,7 @@ function choose(card) {
         flip(card);
         moves++;
 
-        if (moves == 0 || (moves % 2 === 1)) {
+        if (moves === 0 || (moves % 2 !== 0)) {
             lastChosen = card;
         } else {
             check(card);
