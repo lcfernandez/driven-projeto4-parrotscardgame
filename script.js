@@ -102,7 +102,7 @@ function startGame() {
                         <img src="../images/front.png" />
                     </div>
                     <div class="back-face face">
-                        <img src="../images/back/${faces[i]}.gif" />
+                        <img src="../images/back/${faces[i]}parrot.gif" />
                     </div>
                 </div>`
             );
